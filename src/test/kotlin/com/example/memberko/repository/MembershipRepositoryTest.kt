@@ -40,9 +40,9 @@ class MembershipRepositoryTest @Autowired constructor(val membershipRepository: 
         val findMember = membershipRepository.findByUserIdAndMembershipType("userA", MembershipType.KAKAO)
 
         //then
-        assertThat(findMember.get()).isInstanceOf(Membership::class.java)
-        assertThat(findMember.get().membershipType).isEqualTo(MembershipType.KAKAO)
-        assertThat(findMember.get().userId).isEqualTo("userA")
+        assertThat(findMember).isInstanceOf(Membership::class.java)
+        assertThat(findMember?.membershipType).isEqualTo(MembershipType.KAKAO)
+        assertThat(findMember?.userId).isEqualTo("userA")
 
     }
     @Test
