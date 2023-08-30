@@ -1,3 +1,3 @@
 package com.example.memberko.exception
 
-class MembershipException: RuntimeException(val errorResult: Member)
+class MembershipException (val errorResult: MembershipErrorResult) : RuntimeException()
