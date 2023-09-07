@@ -8,8 +8,6 @@ import java.util.*
 
 @Repository
 interface MembershipRepository : JpaRepository<Membership , Long>{
-    override fun findById(id: Long): Optional<Membership>
-
     fun findByUserIdAndMembershipType(userId: String, membershipType:MembershipType): Membership?
 
     fun findAllByUserId(userId: String): List<Membership>
