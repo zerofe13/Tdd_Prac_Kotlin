@@ -6,10 +6,9 @@ import com.example.memberko.domain.MembershipType
 import com.example.memberko.exception.MembershipErrorResult
 import com.example.memberko.exception.MembershipException
 import com.example.memberko.respository.MembershipRepository
-import jakarta.transaction.Transactional
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
@@ -25,7 +24,6 @@ class MembershipService (private val membershipRepository: MembershipRepository)
                 point = point
             )
         )
-
         return MembershipResponse(
             userId = result.userId,
             membershipType = result.membershipType,
@@ -33,6 +31,7 @@ class MembershipService (private val membershipRepository: MembershipRepository)
         )
     }
 
+    @Transactional(readOnly = true)
     fun findAllByUserID(userId: String): List<MembershipResponse> {
         return membershipRepository.findAllByUserId(userId).asSequence()
             .map { it -> MembershipResponse(
@@ -42,6 +41,7 @@ class MembershipService (private val membershipRepository: MembershipRepository)
             ) }.toList()
     }
 
+    @Transactional(readOnly = true)
     fun getMembership(Id: Long, userId: String): MembershipResponse{
         val membership = membershipRepository.findByIdOrNull(Id)
             ?: throw MembershipException(MembershipErrorResult.MEMBERSHIP_NOT_FOUND)
@@ -51,6 +51,7 @@ class MembershipService (private val membershipRepository: MembershipRepository)
         }
 
         return MembershipResponse(
+
             id = membership.id,
             userId = membership.userId,
             membershipType = membership.membershipType,
